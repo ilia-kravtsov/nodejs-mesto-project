@@ -4,7 +4,7 @@ import {
   Types,
   model,
 } from 'mongoose';
-import isValidUrl from '../validators/url';
+import validator from 'validator';
 
 interface ICard extends Document {
   name: string;
@@ -25,17 +25,19 @@ const cardSchema = new Schema<ICard>({
     type: String,
     required: true,
     validate: {
-      validator: isValidUrl,
+      validator: (url: string) => validator.isURL(url),
       message: 'Некорректный URL аватара',
     },
   },
   owner: {
     type: Schema.Types.ObjectId,
     required: true,
+    ref: 'user',
   },
   likes: {
     type: [Schema.Types.ObjectId],
     default: [],
+    ref: 'user',
   },
   createdAt: {
     type: Date,

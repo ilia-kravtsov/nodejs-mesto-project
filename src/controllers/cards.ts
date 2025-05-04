@@ -25,11 +25,6 @@ const createCard = async (req: Request, res: Response, next: NextFunction) => {
   } = req.body;
   const owner = (req as RequestWithUser).user._id;
 
-  if (!name || !link || !owner) {
-    next(HttpError.badRequest({ message: 'Переданы некорректные данные при создании карточки.' }));
-    return;
-  }
-
   try {
     const card = await Card.create({
       name,
@@ -39,11 +34,7 @@ const createCard = async (req: Request, res: Response, next: NextFunction) => {
 
     res.status(StatusCodes.CREATED).send(card);
   } catch (err) {
-    if (err instanceof Error && err.name === 'ValidationError') {
-      next(HttpError.badRequest({ message: 'Переданы некорректные данные при создании карточки.' }));
-    } else {
-      next(err);
-    }
+    next(err);
   }
 };
 
