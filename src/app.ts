@@ -12,17 +12,19 @@ import errorLogger from './middlewares/error-logger';
 import { validateSignInUser, validateSignUpUser } from './middlewares/validators';
 
 const { PORT = 3000 } = process.env;
-
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(helmet());
 app.use(requestLogger);
-app.post('/signup', validateSignUpUser, createUser);
-app.post('/signin', validateSignInUser, login);
-app.use(auth);
-app.use(mainRouter);
+
+app.post('/api/signup', validateSignUpUser, createUser);
+app.post('/api/signin', validateSignInUser, login);
+
+app.use('/api', auth);
+app.use('/api', mainRouter);
+
 app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
