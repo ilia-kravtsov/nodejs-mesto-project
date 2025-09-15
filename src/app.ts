@@ -27,6 +27,9 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 
-mongoose.connect('mongodb://localhost:27017/mestodb').then(() => {
-  app.listen(+PORT);
-});
+mongoose.connect('mongodb://localhost:27017/mestodb')
+  .then(() => {
+    console.log('MongoDB connected');
+    app.listen(+PORT, () => console.log(`Server listening on port ${PORT}`));
+  })
+  .catch(err => console.error('MongoDB connection error:', err));
