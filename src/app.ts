@@ -19,11 +19,11 @@ app.use(cookieParser());
 app.use(helmet());
 app.use(requestLogger);
 
-app.post('/api/signup', validateSignUpUser, createUser);
-app.post('/api/signin', validateSignInUser, login);
+app.post('/signup', validateSignUpUser, createUser);
+app.post('/signin', validateSignInUser, login);
 
-app.use('/api', auth);
-app.use('/api', mainRouter);
+app.use(auth);
+app.use(mainRouter);
 
 app.use(errorLogger);
 app.use(errors());
