@@ -5,6 +5,7 @@ const errorHandler: ErrorRequestHandler = (
   err,
   req,
   res,
+  next
 ) => {
   const { statusCode = StatusCodes.INTERNAL_SERVER_ERROR, message } = err;
 
